@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.UserDao" >
+	<resultMap id="userMap" type="com.ssm.model.User" >
+	    <id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+	    <result column="identity" property="identity" jdbcType="VARCHAR" />
+	    <result column="phone" property="phone" jdbcType="VARCHAR" />
+	    <result column="row_add_time" property="rowAddTime" jdbcType="TIMESTAMP" />
+  	</resultMap>
+	<select id="getAllUser" parameterType="map" resultMap="userMap">
+		select * from ssm_user limit #{limit} offset #{offset}
+	</select>
+	<select id="validateIdentity" parameterType="java.lang.String" resultMap="userMap">
+		select * from ssm_user where identity=#{identity}
+	</select>
+	<select id="getCount" resultType="int">
+		select count(*) from ssm_user
+	</select>
+	<insert id="add" parameterType="com.ssm.model.User">
+	insert into ssm_user (id,`nickname`,identity,`name`,phone,row_add_time)values(#{id},#{nickname},#{identity},#{name},#{phone},#{rowAddTime,jdbcType=TIMESTAMP})
+	</insert>
+	<delete id="delete" parameterType="java.lang.Long">
+	delete from ssm_user where id=#{id}
+	</delete>
+	<update id="update" parameterType="com.ssm.model.User">
+	update ssm_user set `name`=#{name},nickname=#{nickname},phone=#{phone},identity=#{identity},row_add_time=#{rowAddTime,jdbcType=TIMESTAMP} where id=#{id}
+	</update>
+</mapper>
